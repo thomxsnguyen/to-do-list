@@ -5,5 +5,5 @@ curl -X POST http://127.0.0.1:5000/posts \
 
 curl -X GET http://127.0.0.1:5000/view -H "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGhvbXhzbmd1eWVuIn0.ZC6kmDkWC2YEcD7aVRORiRCifJ9t5el_91Mohj9kyw8"
 
-curl -X GET http://localhost:5000/view/1 \
+curl -X GET http://localhost:5000/view/2 \
   -H "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGhvbXhzbmd1eWVuIn0.ZC6kmDkWC2YEcD7aVRORiRCifJ9t5el_91Mohj9kyw8"
