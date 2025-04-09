@@ -30,7 +30,7 @@ class Post(db.Model):
 
   def to_dict(self):
     return {
-      "id": self.id, "title": self.title, "content": self.content
+      "id": self.id, "title": self.title, "description": self.description
     }
   
 
@@ -66,7 +66,7 @@ def dashboard():
     return jsonify({"message": str(e)}), 401
 
 
-@app.route('/create', methods=['POST'])
+@app.route('/posts', methods=['POST'])
 def create_post():
   try:
     auth_header = request.headers.get('Authorization')
@@ -76,14 +76,31 @@ def create_post():
     return jsonify({'message': str(e)}), 401
   
   data = request.get_json()
+  title = data.get('title')
+  description = data.get('description')
+ 
+  post = Post(title=title, description=description)
+  db.session.add(post)
+  db.session.commit()
 
   return jsonify({'message': 'post created'}), 200
   
 
+@app.route('/view', methods=['GET'])
+def view_all():
+  posts = [p.to_dict() for p in Post.query.all()]
+  return jsonify({"posts": posts})
+
+@app.route('/view/<int:post_id>', methods=['GET'])
+def view_post(post_id):
+  post = Post.query.get(post_id)
+  return jsonify({'post': post.to_dict()}), 200
 
 
 
 if __name__ == "__main__":
+  with app.app_context():
+    db.create_all()
   app.run(debug=True, port=5000)
 
   
